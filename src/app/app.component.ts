@@ -8,6 +8,7 @@ import { CreateStudentComponent } from './components/create-student/create-stude
 import { CreateStudentService } from './api/services/create-student.service';
 import { Student } from './api/models';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UpdateStudentComponent } from './components/update-student/update-student.component';
 
 @Component({
   selector: 'app-root',
@@ -62,6 +63,23 @@ export class AppComponent implements AfterViewInit, OnInit, OnChanges{
   }
   createStudent(){
     const dialogRef = this.dialog.open(CreateStudentComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+      this.loadData();
+    });
+  }
+
+  updateStudent(row: any){
+    const dialogRef = this.dialog.open(UpdateStudentComponent,
+      {
+        data: {
+          name: row.name,
+          age: row.age,
+          document: row.document,
+          licence: row.licence,
+          id: row.id
+        },
+      });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result)
       this.loadData();

@@ -104,6 +104,93 @@ export class CreateStudentService extends BaseService {
   }
 
   /**
+   * Path part for operation apiCreateStudentPut
+   */
+  static readonly ApiCreateStudentPutPath = '/api/CreateStudent';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiCreateStudentPut$Plain()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  apiCreateStudentPut$Plain$Response(params?: {
+    body?: Student
+  }): Observable<StrictHttpResponse<string>> {
+
+    const rb = new RequestBuilder(this.rootUrl, CreateStudentService.ApiCreateStudentPutPath, 'put');
+    if (params) {
+      rb.body(params.body, 'application/*+json');
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'text',
+      accept: 'text/plain'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<string>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiCreateStudentPut$Plain$Response()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  apiCreateStudentPut$Plain(params?: {
+    body?: Student
+  }): Observable<string> {
+
+    return this.apiCreateStudentPut$Plain$Response(params).pipe(
+      map((r: StrictHttpResponse<string>) => r.body as string)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiCreateStudentPut$Json()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  apiCreateStudentPut$Json$Response(params?: {
+    body?: Student
+  }): Observable<StrictHttpResponse<string>> {
+
+    const rb = new RequestBuilder(this.rootUrl, CreateStudentService.ApiCreateStudentPutPath, 'put');
+    if (params) {
+      rb.body(params.body, 'application/*+json');
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'text/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<string>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiCreateStudentPut$Json$Response()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  apiCreateStudentPut$Json(params?: {
+    body?: Student
+  }): Observable<string> {
+
+    return this.apiCreateStudentPut$Json$Response(params).pipe(
+      map((r: StrictHttpResponse<string>) => r.body as string)
+    );
+  }
+
+  /**
    * Path part for operation apiCreateStudentPost
    */
   static readonly ApiCreateStudentPostPath = '/api/CreateStudent';
