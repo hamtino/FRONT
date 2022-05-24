@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { Student } from 'src/app/api/models';
 import { CreateStudentService } from 'src/app/api/services';
 
 @Component({
@@ -17,17 +18,26 @@ export class CreateStudentComponent implements OnInit {
     licencia: new FormControl('')
   });
 
+  public student: any = {};
+
   constructor(private _snackBar: MatSnackBar, private api: CreateStudentService) { }
 
   ngOnInit(): void {
   }
 
   onSubmit(student: any): void {
-    console.log(student)
-    this.api.apiCreateStudentPost$Json({students:student.nombre}).subscribe(resp =>{
-      console.log(resp)
+    this.student.age = student.edad;
+    this.student.document= student.documento;
+    this.student.licence= student.licencia;
+    this.student.name = student.nombre;
+    
+    this.api.apiCreateStudentPost$Json( {
+      body: this.student
+    }
+    ).subscribe(resp =>{
+      this.openSnackBar(resp, 'OK')
     })
-    this.openSnackBar('creado correctamente', 'OK')
+    
   }
 
   openSnackBar(message: string, action: string) {

@@ -15,16 +15,25 @@
           "tags": [
             "CreateStudent"
           ],
-          "parameters": [
-            {
-              "name": "students",
-              "in": "query",
-              "schema": {
-                "type": "string",
-                "nullable": true
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Student"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Student"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Student"
+                }
               }
             }
-          ],
+          },
           "responses": {
             "200": {
               "description": "Success",
@@ -90,6 +99,28 @@
     },
     "components": {
       "schemas": {
+        "Student": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "nullable": true
+            },
+            "age": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "document": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "licence": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
         "WeatherForecast": {
           "type": "object",
           "properties": {
