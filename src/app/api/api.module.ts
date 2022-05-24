@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
 import { CreateStudentService } from './services/create-student.service';
-import { WeatherForecastService } from './services/weather-forecast.service';
 
 /**
  * Module that provides all services and configuration.
@@ -16,7 +15,6 @@ import { WeatherForecastService } from './services/weather-forecast.service';
   declarations: [],
   providers: [
     CreateStudentService,
-    WeatherForecastService,
     ApiConfiguration
   ],
 })

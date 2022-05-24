@@ -23,6 +23,87 @@ export class CreateStudentService extends BaseService {
   }
 
   /**
+   * Path part for operation apiCreateStudentGet
+   */
+  static readonly ApiCreateStudentGetPath = '/api/CreateStudent';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiCreateStudentGet$Plain()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiCreateStudentGet$Plain$Response(params?: {
+  }): Observable<StrictHttpResponse<Array<Student>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, CreateStudentService.ApiCreateStudentGetPath, 'get');
+    if (params) {
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'text',
+      accept: 'text/plain'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<Student>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiCreateStudentGet$Plain$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiCreateStudentGet$Plain(params?: {
+  }): Observable<Array<Student>> {
+
+    return this.apiCreateStudentGet$Plain$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<Student>>) => r.body as Array<Student>)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiCreateStudentGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiCreateStudentGet$Json$Response(params?: {
+  }): Observable<StrictHttpResponse<Array<Student>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, CreateStudentService.ApiCreateStudentGetPath, 'get');
+    if (params) {
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'text/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<Student>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiCreateStudentGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiCreateStudentGet$Json(params?: {
+  }): Observable<Array<Student>> {
+
+    return this.apiCreateStudentGet$Json$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<Student>>) => r.body as Array<Student>)
+    );
+  }
+
+  /**
    * Path part for operation apiCreateStudentPost
    */
   static readonly ApiCreateStudentPostPath = '/api/CreateStudent';
