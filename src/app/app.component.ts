@@ -7,6 +7,7 @@ import { DetailsComponent } from './components/details/details.component';
 import { CreateStudentComponent } from './components/create-student/create-student.component';
 import { CreateStudentService } from './api/services/create-student.service';
 import { Student } from './api/models';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnChanges{
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort , { static: true }) sort!: MatSort;
 
-  constructor(public dialog: MatDialog, private api: CreateStudentService) {
+  constructor(public dialog: MatDialog, private api: CreateStudentService, private _snackBar: MatSnackBar,) {
     this.dataSource = new MatTableDataSource<Student>();
   }
 
@@ -41,6 +42,12 @@ export class AppComponent implements AfterViewInit, OnInit, OnChanges{
     })
   }
 
+  delete(idDelete: any){
+    this.api.apiCreateStudentDelete$Json({ID: idDelete}).subscribe(resp =>{
+      this.loadData();
+      this.openSnackBar("Estudiante Eliminado correctamente", "OK")
+    })
+  }
   openDialog(row: any) {
     const dialogRef = this.dialog.open(DetailsComponent,
       {
@@ -73,6 +80,10 @@ export class AppComponent implements AfterViewInit, OnInit, OnChanges{
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
 }
 
