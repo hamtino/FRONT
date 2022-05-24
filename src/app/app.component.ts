@@ -1,7 +1,10 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ViewChild, Inject} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { DetailsComponent } from './components/details/details.component';
+import { CreateStudentComponent } from './components/create-student/create-student.component';
 
 export interface UserData {
   id: string;
@@ -9,6 +12,7 @@ export interface UserData {
   progress: string;
   fruit: string;
 }
+
 
 /** Constants used to fill up our data base. */
 const FRUITS: string[] = [
@@ -49,13 +53,14 @@ const NAMES: string[] = [
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements AfterViewInit{
-  displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
+  showFiller = false;
+  displayedColumns: string[] = ['id', 'nombre', 'edad', 'documento', 'licencia', 'acciones'];
   dataSource: MatTableDataSource<UserData>;
 
-  //@ViewChild(MatPaginator) paginator: MatPaginator;
-  //@ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort , { static: true }) sort!: MatSort;
 
-  constructor() {
+  constructor(public dialog: MatDialog) {
     // Create 100 users
     const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
 
@@ -63,9 +68,26 @@ export class AppComponent implements AfterViewInit{
     this.dataSource = new MatTableDataSource(users);
   }
 
+  openDialog(row: any) {
+    const dialogRef = this.dialog.open(DetailsComponent,
+      {
+        data: {
+          name: row.name,
+        },
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  createStudent(){
+    const dialogRef = this.dialog.open(CreateStudentComponent);
+
+  }
+
   ngAfterViewInit() {
-    //this.dataSource.paginator = this.paginator;
-    //this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event) {
